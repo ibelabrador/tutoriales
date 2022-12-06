@@ -1,0 +1,73 @@
+Taller de Git:
+
+    Crear un Repositorio en Github
+1. Dar clic en el botón + de la parte superior derecha:
+2. En la página que aparece, asignar un nombre al repositorio, chequear la opción Add a README file y dar clic al botón Create repository:
+
+Se habrá creado el repositorio:
+
+    Instalar Git
+
+1. Abrir una terminal y verificar si se tiene instalado git:
+$ git --version
+2. De no tenerlo instalado, los pasos para hacerlo variarán dependiendo del sistema operativo. En MacOS aparecerȧ un cuadro de diálogo que guiará el proceso. Para otros sistemas operativos seguir los pasos indicados en el sitio de Git.
+    
+    Añadir una llave SSH a Github
+
+Estos pasos fueron realizados en MacOS. Para otros sistemas operativos visitar el apartado específico en Github.
+1. Abrir una terminal y crear una llave ssh:
+$ ssh-keygen -t ed25519 -C "your_email@example.com"
+2. Dejar los valores por defecto, simplemente oprimir Enter. Cuando se pida la clave para la llave, ingresar una y confirmarla:
+> Enter passphrase (empty for no passphrase): [Type a passphrase]
+> Enter same passphrase again: [Type passphrase again]
+3. Para añadir la llave al ssh-agent, lo iniciamos en segundo plano:
+$ eval "$(ssh-agent -s)"
+> Agent pid 59566
+4. Si la versión de MacOS que se está usando es igual o mayor a la 10.12.2, editar el siguiente archivo:
+$ nano ~/.ssh/config
+
+Agregar el siguiente contenido:
+Host *.github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+
+Guardar (control + o) y cerrar el documento (control + x)
+
+5. Añadir finalmente la llave al ssh-agent:
+$ ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+6. Copiar el la llave pública. En MacOS se:
+$ pbcopy < ~/.ssh/id_ed25519.pub
+7. En Github, en la parte superior derecha, dar clic en la imagen de perfil y luego en Settings:
+8. En la sección Access de la barra del lado izquierdo, dar clic en SSH and GPG keys.
+9. Click en el botón New SSH key.
+10. En el formulario, ingrese un título que sea descriptivo de la llave que está usando.
+11. En Key type dejar seleccionado Authentication key.
+12. En el campo Key pegar la llave pública copiada en el paso 6.
+13. Click en el botón Add SSH key.
+
+    Clonar un repositorio
+1. En Github abrimos el repositorio que queremos clonar, damos clic al botón Code, seleccionamos la pestaña SSH y damos clic a botón copiar:
+2. Abrir una terminal y ubicarse en la carpeta donde se desea clonar el repositorio:
+$ cd path/to/folder
+3. Clonar el repositorio:
+$ git clone <repositorio_copiado_paso_1>
+
+    Añadir Cambios al Repositorio y Actualizar Origin
+1. Abrir una terminal y ubicarse en la carpeta del repositorio:
+$ cd path/to/repository	
+2. Agregar los cambios que se quieren para el nuevo commit:
+$ git add .
+3. Crear un nuevo commit junto con un mensaje descriptivo:
+$ git commit -m “commit-message”
+4. Subir los cambios al repositorio central (Origin):
+$ git push origin main
+
+    Actualizar repositorio local
+1. Abrir la terminal y ubicarse en la carpeta del repositorio:
+$cd path/to/repository
+2. Actualizar repositorio:
+$ git pull
+
+
+
